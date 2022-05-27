@@ -7,10 +7,10 @@ import com.example.ltw_nhom5.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.Optional;
@@ -27,13 +27,18 @@ public class PostController {
         this.userService = userService;
     }
 
-    @RequestMapping(value = "/newPost", method = RequestMethod.GET)
+    @RequestMapping(value = "/newpost", method = RequestMethod.GET)
     public String newPost(Principal principal,
                           Model model) {
 
         Optional<User> user = userService.findByUsername(principal.getName());
-
+        System.out.println("****************************");
+        System.out.println(principal.getName());
+        System.out.println("****************************");
         if (user.isPresent()) {
+            System.out.println("****************************");
+            System.out.println("ko loi");
+            System.out.println("****************************");
             Post post = new Post();
             post.setUser(user.get());
 
@@ -42,12 +47,18 @@ public class PostController {
             return "/postForm";
 
         } else {
+            System.out.println("****************************");
+            System.out.println("loi");
+            System.out.println("****************************");
             return "/error";
         }
     }
 
-    @RequestMapping(value = "/newPost", method = RequestMethod.POST)
-    public String createNewPost(@Valid Post post) {
+    @RequestMapping(value = "/newpost", method = RequestMethod.POST)
+    public String createNewPost(Post post) {
+        System.out.println("****************************");
+        System.out.println("da luu");
+        System.out.println("****************************");
         postService.save(post);
         return "redirect:/blog/" + post.getUser().getUsername();
     }

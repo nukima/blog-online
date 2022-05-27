@@ -26,7 +26,7 @@ public class Post {
     private String content;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "create_date", nullable = false, updatable = false)
+    @Column(name = "create_date", nullable = true, updatable = false)
     @CreationTimestamp
     private Date create;
 
